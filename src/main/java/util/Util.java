@@ -1,25 +1,31 @@
 package util;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    private static final String URL = "jdbc:mysql://localhost:3306/users";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final SessionFactory factory = buildSessionFactory();
 
-    private Connection connection;
-
-    public Connection getConnection() {
-
+    private static SessionFactory buildSessionFactory() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.err.println("Database connection error!");
+            return new Configuration().configure().buildSessionFactory();
+        } catch (Throwable e) {
+            System.err.println("Initial SessionFactory creation failed." + e);
+            throw new ExceptionInInitializerError(e);
         }
-        return connection;
+
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return factory;
+    }
+
+    public static void shutdown() {
+        getSessionFactory().close();
     }
 
 

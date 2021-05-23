@@ -1,33 +1,39 @@
 package util;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 
 public class Util {
-    private static final SessionFactory factory = buildSessionFactory();
+
+    private static SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure()
+                .build();
+
         try {
-            return new Configuration().configure().buildSessionFactory();
-        } catch (Throwable e) {
-            System.err.println("Initial SessionFactory creation failed." + e);
-            throw new ExceptionInInitializerError(e);
+            sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
+        }
+        catch (Exception e) {
+            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
+            // so destroy it manually.
+            StandardServiceRegistryBuilder.destroy( registry );
         }
 
+        return sessionFactory;
     }
 
     public static SessionFactory getSessionFactory() {
-        return factory;
+        return sessionFactory;
     }
 
     public static void shutdown() {
         getSessionFactory().close();
     }
-
-
 
 }

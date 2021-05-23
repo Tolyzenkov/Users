@@ -14,28 +14,12 @@ public class Main {
     private static final byte testAge = 27;
 
     public static void main(String[] args) {
+//        userService.createUsersTable();
         userService.saveUser(testName, testLastName, testAge);
+//        userService.dropUsersTable();
+//        userService.dropUsersTable();
     }
 
-    public static void saveUser() {
-        try {
-           // userService.dropUsersTable();
-           // userService.createUsersTable();
-            userService.saveUser(testName, testLastName, testAge);
-
-            User user = userService.getAllUsers().get(0);
-
-            if (!testName.equals(user.getName())
-                    || !testLastName.equals(user.getLastName())
-                    || testAge != user.getAge()
-            ) {
-                System.out.println("!!!");
-            }
-
-        } catch (Exception e) {
-            System.out.println("!!!");
-        }
-    }
 
 
 }

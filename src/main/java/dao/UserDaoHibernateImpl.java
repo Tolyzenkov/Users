@@ -20,27 +20,27 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
 
     @Override
     public void createUsersTable() {
-//        String sql = "CREATE TABLE `users`.`users` (\n" +
-//                "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
-//                "  `name` VARCHAR(45) NOT NULL,\n" +
-//                "  `lastname` VARCHAR(45) NOT NULL,\n" +
-//                "  `age` INT(3) NOT NULL,\n" +
-//                "  PRIMARY KEY (`id`))\n" +
-//                "ENGINE = InnoDB\n" +
-//                "DEFAULT CHARACTER SET = utf8";
-//
-//        try {
-//            session = getSessionFactory().openSession();
-//            transaction = session.beginTransaction();
-//            session.createSQLQuery(sql).executeUpdate();
-//            transaction.commit();
-//        } catch (Exception e) {
-//
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
+        String sql = "CREATE TABLE `users`.`users` (\n" +
+                "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
+                "  `name` VARCHAR(45) NOT NULL,\n" +
+                "  `lastname` VARCHAR(45) NOT NULL,\n" +
+                "  `age` INT(3) NOT NULL,\n" +
+                "  PRIMARY KEY (`id`))\n" +
+                "ENGINE = InnoDB\n" +
+                "DEFAULT CHARACTER SET = utf8";
+
+        try {
+            session = getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.createSQLQuery(sql).executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
 
     }
 
